@@ -1,0 +1,113 @@
+-- Tabla de usuarios normales (con campo de género agregado)
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    genero ENUM('masculino', 'femenino', 'otro') DEFAULT NULL, -- nuevo campo
+    direccion VARCHAR(300) not null,
+    telefono VARCHAR(30) not null,
+    foto_perfil LONGBLOB,
+    latitud DECIMAL(10, 7),  -- ubicación de la casa
+    longitud DECIMAL(10, 7),
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    foto_perfil LONGBLOB,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Paso 1: Crear tablas sin restricciones de clave foránea inicialmente
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    encargado_id INT DEFAULT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE agentes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    telefono VARCHAR(30) NOT NULL,
+    foto_perfil LONGBLOB,
+    datos_faciales LONGBLOB,
+    categoria_id INT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Paso 2: Agregar las restricciones de clave foránea después de crear ambas tablas
+ALTER TABLE categorias
+ADD CONSTRAINT fk_categoria_encargado
+FOREIGN KEY (encargado_id) REFERENCES agentes(id)
+ON DELETE SET NULL
+ON UPDATE CASCADE;
+
+ALTER TABLE agentes
+ADD CONSTRAINT fk_agente_categoria
+FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+ON DELETE SET NULL
+ON UPDATE CASCADE;
+
+-- Tabla de denuncias realizadas por usuarios
+CREATE TABLE denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    categoria_id INT NOT NULL,
+    agente_id INT DEFAULT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL,
+    ubicacion VARCHAR(255),  -- ubicación del hecho
+    latitud DECIMAL(10, 7),  
+    longitud DECIMAL(10, 7),
+    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+    FOREIGN KEY (agente_id) REFERENCES agentes(id) ON DELETE SET NULL
+);
+
+-- Tabla de evidencias asociadas a una denuncia
+CREATE TABLE evidencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    denuncia_id INT NOT NULL,
+    tipo ENUM('foto', 'video') NOT NULL,
+    archivo_path LONGBLOB NOT NULL,
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (denuncia_id) REFERENCES denuncias(id) ON DELETE CASCADE
+);
+
+-- NUEVA: Tabla de pasos por tipo de denuncia
+CREATE TABLE pasos_denuncia (
+    id_paso INT AUTO_INCREMENT PRIMARY KEY,
+    id_categoria INT NOT NULL,
+    descripcion_paso TEXT NOT NULL,
+    orden INT NOT NULL,
+    FOREIGN KEY (id_categoria) REFERENCES categorias(id) ON DELETE CASCADE
+);
+
+-- NUEVA: Seguimiento de denuncia con relación a los pasos
+CREATE TABLE seguimiento_denuncia (
+    id_seguimiento INT AUTO_INCREMENT PRIMARY KEY,
+    id_denuncia INT NOT NULL,
+    id_paso INT NOT NULL,
+    completado BOOLEAN DEFAULT FALSE,
+    fecha_completado DATETIME DEFAULT NULL,
+    FOREIGN KEY (id_denuncia) REFERENCES denuncias(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_paso) REFERENCES pasos_denuncia(id_paso) ON DELETE CASCADE
+);
+
+CREATE TABLE evidencias_seguimiento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_seguimiento INT NOT NULL,
+    Descripcion VARCHAR(255),
+    archivo_path LONGBLOB NOT NULL,
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_denuncia(id_seguimiento) ON DELETE CASCADE
+);
+

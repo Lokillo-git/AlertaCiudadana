@@ -1,0 +1,34 @@
+USE alertaciudadana;
+
+-- -----------------------------
+-- INSERTAR ADMINISTRADOR
+-- -----------------------------
+INSERT INTO administradores (nombre, email, password, foto_perfil)
+VALUES ('Admin Principal', 'admin@ciudad.alert.bo', 'admin123', NULL);
+
+-- -----------------------------
+-- INSERTAR AGENTE
+-- -----------------------------
+INSERT INTO agentes (nombre, email, password, telefono, foto_perfil, datos_faciales, categoria_id)
+VALUES ('Agente Principal', 'agente@ciudad.alert.bo', 'agente123', '70000002', NULL, NULL, 1);
+
+-- -----------------------------
+-- INSERTAR USUARIO
+-- -----------------------------
+INSERT INTO usuarios (nombre, email, password, genero, direccion, telefono, foto_perfil, latitud, longitud)
+VALUES ('Usuario Principal', 'usuario@ciudad.alert.bo', 'usuario123', 'masculino', 'Calle Principal 123', '70000001', NULL, -17.7833, -63.1821);
+
+-- -----------------------------
+-- INSERTAR CATEGORIAS
+-- -----------------------------
+INSERT INTO categorias (nombre, encargado_id) VALUES
+('Seguridad Ciudadana', 1),
+('Tránsito y Transporte', NULL),
+('Medio Ambiente', NULL),
+('Servicios Públicos', NULL),
+('Violencia Familiar', NULL),
+('Robo y Hurtos', NULL),
+('Emergencias Médicas', NULL),
+('Incendios', NULL),
+('Accidentes de Tránsito', NULL),
+('Otros', NULL);

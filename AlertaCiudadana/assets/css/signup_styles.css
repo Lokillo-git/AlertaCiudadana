@@ -1,0 +1,309 @@
+/* Estilos específicos para la página de registro */
+.signup-section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+.signup-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+}
+
+.signup-card {
+    background: white;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.map-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+#mapa-ubicacion {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.signup-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.signup-header p {
+    color: #666;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+.coordinates-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Estilos para el campo de género */
+.gender-options {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+}
+
+.gender-option input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+.photo-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.photo-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid var(--light-color);
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.photo-btn {
+    padding: 0.5rem 1rem;
+    background: var(--light-color);
+    color: var(--dark-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.photo-btn:hover {
+    background: #ddd;
+}
+
+.photo-btn.primary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.photo-btn.primary:hover {
+    background: var(--primary-color);
+}
+
+#camera-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.camera-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+#camera-view {
+    width: 100%;
+    background: #333;
+    margin-bottom: 1rem;
+}
+
+.camera-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.signup-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.signup-btn:hover {
+    background: var(--primary-color);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+}
+
+.login-footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+
+/* Estilos para el tour */
+.tour-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.tour-btn:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .signup-container {
+        grid-template-columns: 1fr;
+    }
+
+    .signup-card {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-options {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .photo-btn {
+        width: 100%;
+    }
+
+    .gender-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #mapa-ubicacion {
+        min-height: 300px;
+    }
+    
+    .tour-btn {
+        bottom: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
