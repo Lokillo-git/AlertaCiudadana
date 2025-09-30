@@ -50,7 +50,7 @@ class admin_controller
         }
     }
 
-        // Iniciar sesión del administrador o del trabajador
+    // Iniciar sesión del administrador o del trabajador
     public function iniciarSesion()
     {
         session_start();
@@ -70,8 +70,7 @@ class admin_controller
                 // Login como ADMINISTRADOR
                 $admin = $this->adminModel->obtenerPorEmail($email);
 
-                // 🔹 Comparar en texto plano
-                if ($admin && $password === $admin['password']) {
+                if ($admin && password_verify($password, $admin['password'])) {
                     $_SESSION['admin_id'] = $admin['id'];
                     $_SESSION['admin_nombre'] = $admin['nombre'];
                     $_SESSION['admin_email'] = $admin['email'];
@@ -85,10 +84,9 @@ class admin_controller
                 }
             } elseif ($rol === 'worker') {
                 // Login como TRABAJADOR
-                $agente = $this->adminModel->obtenerAgentePorEmail($email);
+                $agente = $this->adminModel->obtenerAgentePorEmail($email); // Usa el nuevo método
 
-                // 🔹 Comparar en texto plano
-                if ($agente && $password === $agente['password']) {
+                if ($agente && password_verify($password, $agente['password'])) {
                     $_SESSION['agente_id'] = $agente['id'];
                     $_SESSION['agente_nombre'] = $agente['nombre'];
                     $_SESSION['agente_email'] = $agente['email'];
